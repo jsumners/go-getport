@@ -128,6 +128,15 @@ func TestGetUdp6PortForAddress(t *testing.T) {
 	assert.Greater(t, portResult.Port, 0)
 }
 
+func TestPortResultToAddress(t *testing.T) {
+	portResult := PortResult{
+		IP:   "::1",
+		Port: 3000,
+	}
+	address := PortResultToAddress(portResult)
+	assert.Equal(t, address, "[::1]:3000")
+}
+
 func TestListen(t *testing.T) {
 	t.Run("errors for bad tcp stack", func(t *testing.T) {
 		addr, err := listen("tcp-bad", "127.0.0.1:0")

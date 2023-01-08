@@ -152,6 +152,12 @@ func GetUdp6PortForAddress(address string) (PortResult, error) {
 	return GetPort(UDP6, address)
 }
 
+// PortResultToAddress converts a [PortResult] into a traditional host:port
+// string usable by [net.Listen] or [net.ListenPacket].
+func PortResultToAddress(portResult PortResult) string {
+	return net.JoinHostPort(portResult.IP, cast.ToString(portResult.Port))
+}
+
 // listen is an internal wrapper for [net.Listen] and [net.ListenPacket].
 func listen(stack string, addrWithPort string) (net.Addr, error) {
 	if strings.HasPrefix(stack, "tcp") {
